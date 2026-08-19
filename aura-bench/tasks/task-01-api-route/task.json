@@ -1,0 +1,7 @@
+{
+  "id": "task-01-api-route",
+  "title": "Fix broken API route",
+  "category": "api",
+  "difficulty": "easy",
+  "description": "A tiny plain-function router registers a /health route in build_app() but forgets to register the /users route, even though the users_handler function already exists. Dispatching to /users returns a 404 instead of the expected 200 with the users list. Fix build_app() so it registers the /users route."
+}

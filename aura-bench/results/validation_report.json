@@ -1,0 +1,207 @@
+{
+  "total_tasks": 20,
+  "harness_valid_count": 20,
+  "generated_at_unix": 1787117002.6970534,
+  "tasks": [
+    {
+      "task_id": "task-01-api-route",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "F..                                                                      [100%]\n=================================== FAILURES ===================================\n_________________________ test_users_route_registered __________________________\n\n    def test_users_route_registered():\n        app = build_app()\n        resp = app.dispatch(\"/users\")\n>       assert resp[\"status\"] == 200\nE       assert 404 == 200\n\ntest_task.py:7: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_users_route_registered - assert 404 == 200\n1 failed, 2 passed in 0.02s",
+      "solution_output_tail": "...                                                                      [100%]\n3 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-02-missing-function",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ns = 'solo'\n\n    def reverse_words(s):\n        \"\"\"Reverse the order of words in a whitespace-separated string.\"\"\"\n>       raise NotImplementedError\nE       NotImplementedError\n\nstring_utils.py:3: NotImplementedError\n=========================== short test summary info ============================\nFAILED test_task.py::test_reverse_words_basic - NotImplementedError\nFAILED test_task.py::test_reverse_words_collapses_whitespace - NotImplemented...\nFAILED test_task.py::test_reverse_words_single_word - NotImplementedError\n3 failed in 0.03s",
+      "solution_output_tail": "...                                                                      [100%]\n3 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-03-auth-bug",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "E        +  where False = login('alice', 'correct-horse-battery-staple', {'alice': 'correct-horse-battery-staple'})\n\ntest_task.py:7: AssertionError\n______________________ test_wrong_password_denies_access _______________________\n\n    def test_wrong_password_denies_access():\n>       assert login(\"alice\", \"wrong-password\", USERS_DB) is False\nE       AssertionError: assert True is False\nE        +  where True = login('alice', 'wrong-password', {'alice': 'correct-horse-battery-staple'})\n\ntest_task.py:11: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_correct_password_grants_access - AssertionError: as...\nFAILED test_task.py::test_wrong_password_denies_access - AssertionError: asse...\n2 failed, 1 passed in 0.03s",
+      "solution_output_tail": "...                                                                      [100%]\n3 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-04-db-migration",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "______________________ test_users_table_has_email_column _______________________\n\n    def test_users_table_has_email_column():\n        conn = sqlite3.connect(\":memory:\")\n        apply_migrations(conn)\n        cur = conn.cursor()\n        cur.execute(\"PRAGMA table_info(users)\")\n        columns = {row[1] for row in cur.fetchall()}\n>       assert \"email\" in columns\nE       AssertionError: assert 'email' in {'id', 'name'}\n\ntest_task.py:12: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_users_table_has_email_column - AssertionError: asse...\n1 failed, 1 passed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-05-import-shim",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 2,
+      "solution_returncode": 0,
+      "starter_output_tail": "ImportError while importing test module '/tmp/aurabench-task-05-import-shim-starter-r0dtt6cj/test_task.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/usr/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest_task.py:1: in <module>\n    from consumer import compute\nconsumer.py:1: in <module>\n    from shim import add, multiply\nE   ImportError: cannot import name 'multiply' from 'shim' (/tmp/aurabench-task-05-import-shim-starter-r0dtt6cj/shim.py)\n=========================== short test summary info ============================\nERROR test_task.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.15s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-06-off-by-one",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "test_task.py:9: AssertionError\n______________________________ test_correct_count ______________________________\n\n    def test_correct_count():\n>       assert len(first_n_even_numbers(20)) == 20\nE       assert 19 == 20\nE        +  where 19 = len([2, 4, 6, 8, 10, 12, ...])\nE        +    where [2, 4, 6, 8, 10, 12, ...] = first_n_even_numbers(20)\n\ntest_task.py:13: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_first_five_even_numbers - assert [2, 4, 6, 8] == [2...\nFAILED test_task.py::test_first_one_even_number - assert [] == [2]\nFAILED test_task.py::test_correct_count - assert 19 == 20\n3 failed in 0.03s",
+      "solution_output_tail": "...                                                                      [100%]\n3 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-07-missing-endpoint",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "    def test_created_item_shows_up_in_list():\n        handlers.dispatch(\"POST\", \"/items\", {\"name\": \"widget\"})\n        resp = handlers.dispatch(\"GET\", \"/items\")\n        assert resp[\"status\"] == 200\n>       assert resp[\"body\"] == [{\"name\": \"widget\"}]\nE       AssertionError: assert [] == [{'name': 'widget'}]\nE         \nE         Right contains one more item: {'name': 'widget'}\nE         Use -v to get more diff\n\ntest_task.py:18: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_create_item_returns_201 - assert 404 == 201\nFAILED test_task.py::test_created_item_shows_up_in_list - AssertionError: ass...\n2 failed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-08-race-condition",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "            threading.Thread(target=run_increments, args=(counter, increments_per_thread))\n            for _ in range(n_threads)\n        ]\n        for t in threads:\n            t.start()\n        for t in threads:\n            t.join()\n>       assert counter.value == n_threads * increments_per_thread\nE       assert 67 == (20 * 50)\nE        +  where 67 = <counter.Counter object at 0x7f4f2031e650>.value\n\ntest_task.py:18: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_counter_is_thread_safe - assert 67 == (20 * 50)\n1 failed in 0.06s",
+      "solution_output_tail": ".                                                                        [100%]\n1 passed in 0.11s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-09-error-handling",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "                                      ^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nvalue = None\n\n    def parse_int(value):\n>       return int(value)\n               ^^^^^^^^^^\nE       TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'\n\nparser.py:2: TypeError\n=========================== short test summary info ============================\nFAILED test_task.py::test_safe_parse_invalid_string_returns_error_dict - Valu...\nFAILED test_task.py::test_safe_parse_none_returns_error_dict - TypeError: int...\n2 failed, 1 passed in 0.03s",
+      "solution_output_tail": "...                                                                      [100%]\n3 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-10-docker-config",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "\ntest_task.py:7: AssertionError\n__________________ test_dockerfile_starts_correct_entrypoint ___________________\n\n    def test_dockerfile_starts_correct_entrypoint():\n        dockerfile = pathlib.Path(__file__).parent / \"Dockerfile\"\n        content = dockerfile.read_text()\n>       assert 'CMD [\"python\", \"server.py\"]' in content\nE       assert 'CMD [\"python\", \"server.py\"]' in 'FROM python:3.11-slim\\nWORKDIR /app\\nCOPY . /app\\nRUN pip install --no-cache-dir -r requirements.txt\\n# BUG: service actually listens on 8080 and starts from server.py\\nEXPOSE 3000\\nCMD [\"python\", \"main.py\"]\\n'\n\ntest_task.py:13: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_dockerfile_exposes_correct_port - assert 'EXPOSE 80...\nFAILED test_task.py::test_dockerfile_starts_correct_entrypoint - assert 'CMD ...\n2 failed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-11-regex-validation",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": ".F.                                                                      [100%]\n=================================== FAILURES ===================================\n_________________ test_domain_without_literal_dot_is_rejected __________________\n\n    def test_domain_without_literal_dot_is_rejected():\n        # Under the buggy pattern the unescaped '.' matches any character,\n        # so this string with no real dot incorrectly validates.\n>       assert validate_email(\"bob@sitexcom\") is False\nE       AssertionError: assert True is False\nE        +  where True = validate_email('bob@sitexcom')\n\ntest_task.py:11: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_domain_without_literal_dot_is_rejected - AssertionE...\n1 failed, 2 passed in 0.02s",
+      "solution_output_tail": "...                                                                      [100%]\n3 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-12-pagination",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "____________________________ test_partial_last_page ____________________________\n\n    def test_partial_last_page():\n>       assert paginate(ITEMS, 0, 3) == [0, 1, 2]\nE       assert [0, 1] == [0, 1, 2]\nE         \nE         Right contains one more item: 2\nE         Use -v to get more diff\n\ntest_task.py:15: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_first_page_has_full_page_size - assert [0, 1, 2, 3]...\nFAILED test_task.py::test_second_page_has_full_page_size - assert [5, 6, 7, 8...\nFAILED test_task.py::test_partial_last_page - assert [0, 1] == [0, 1, 2]\n3 failed in 0.03s",
+      "solution_output_tail": "...                                                                      [100%]\n3 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-13-sort-comparator",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "\n    def test_scores_are_non_increasing():\n        result = sort_by_score_desc(RECORDS)\n        scores = [r[\"score\"] for r in result]\n>       assert scores == sorted(scores, reverse=True)\nE       assert [10, 30, 20] == [30, 20, 10]\nE         \nE         At index 0 diff: 10 != 30\nE         Use -v to get more diff\n\ntest_task.py:18: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_sorted_by_score_descending - AssertionError: assert...\nFAILED test_task.py::test_scores_are_non_increasing - assert [10, 30, 20] == ...\n2 failed in 0.03s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-14-sql-where",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "test_task.py:21: AssertionError\n_________________________ test_inactive_user_excluded __________________________\n\n    def test_inactive_user_excluded():\n        conn = _make_conn()\n        rows = get_active_users(conn)\n        names = {row[1] for row in rows}\n>       assert \"carol\" not in names\nE       AssertionError: assert 'carol' not in {'alice', 'bob', 'carol'}\n\ntest_task.py:29: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_only_active_users_returned - AssertionError: assert...\nFAILED test_task.py::test_inactive_user_excluded - AssertionError: assert 'ca...\n2 failed in 0.03s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-15-stale-cache",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "        store.set_user(1, \"Alice\")\n        assert store.get_user(1) == \"Alice\"  # populates the cache\n    \n        store.set_user(1, \"Alicia\")\n>       assert store.get_user(1) == \"Alicia\"  # must not be stale\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: assert 'Alice' == 'Alicia'\nE         \nE         - Alicia\nE         + Alice\n\ntest_task.py:10: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_get_user_reflects_latest_update - AssertionError: a...\n1 failed, 1 passed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-16-json-datetime",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "                    pass\n                else:\n                    return list(iterable)\n                # Let the base class default method raise the TypeError\n                return super().default(o)\n    \n        \"\"\"\n>       raise TypeError(f'Object of type {o.__class__.__name__} '\n                        f'is not JSON serializable')\nE       TypeError: Object of type datetime is not JSON serializable\n\n/usr/lib/python3.11/json/encoder.py:180: TypeError\n=========================== short test summary info ============================\nFAILED test_task.py::test_serializes_record_with_datetime - TypeError: Object...\n1 failed, 1 passed in 0.04s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-17-cors-header",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "E         + http://localhost:3000\n\ntest_task.py:6: AssertionError\n______________________ test_headers_include_allow_methods ______________________\n\n    def test_headers_include_allow_methods():\n        headers = build_response_headers(\"https://app.example.com\")\n>       assert \"Access-Control-Allow-Methods\" in headers\nE       AssertionError: assert 'Access-Control-Allow-Methods' in {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000'}\n\ntest_task.py:11: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_headers_reflect_requesting_origin - AssertionError:...\nFAILED test_task.py::test_headers_include_allow_methods - AssertionError: ass...\n2 failed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-18-env-var",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f9473d41e10>\n\n    def test_reads_database_url_from_env(monkeypatch):\n        monkeypatch.setenv(\"DATABASE_URL\", \"postgres://example/db\")\n>       assert get_database_url() == \"postgres://example/db\"\nE       AssertionError: assert 'sqlite:///default.db' == 'postgres://example/db'\nE         \nE         - postgres://example/db\nE         + sqlite:///default.db\n\ntest_task.py:6: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_reads_database_url_from_env - AssertionError: asser...\n1 failed, 1 passed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-19-retry-backoff",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def fn():\n        state[\"calls\"] += 1\n        if state[\"calls\"] > guard_after:\n>           raise _GuardExceeded(\n                f\"call_with_retry invoked fn more than {guard_after} times - \"\n                \"looks like max_attempts is not being enforced\"\n            )\nE           test_task._GuardExceeded: call_with_retry invoked fn more than 50 times - looks like max_attempts is not being enforced\n\ntest_task.py:16: _GuardExceeded\n=========================== short test summary info ============================\nFAILED test_task.py::test_retry_gives_up_after_max_attempts - test_task._Guar...\n1 failed, 1 passed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    },
+    {
+      "task_id": "task-20-mutable-default",
+      "starter_fails_as_expected": true,
+      "solution_passes": true,
+      "starter_returncode": 1,
+      "solution_returncode": 0,
+      "starter_output_tail": "_____________ test_calls_without_explicit_list_do_not_share_state ______________\n\n    def test_calls_without_explicit_list_do_not_share_state():\n        result1 = add_item(\"buy milk\")\n        result2 = add_item(\"walk dog\")\n>       assert result1 == [\"buy milk\"]\nE       AssertionError: assert ['buy milk', 'walk dog'] == ['buy milk']\nE         \nE         Left contains one more item: 'walk dog'\nE         Use -v to get more diff\n\ntest_task.py:7: AssertionError\n=========================== short test summary info ============================\nFAILED test_task.py::test_calls_without_explicit_list_do_not_share_state - As...\n1 failed, 1 passed in 0.02s",
+      "solution_output_tail": "..                                                                       [100%]\n2 passed in 0.01s",
+      "harness_valid": true
+    }
+  ]
+}

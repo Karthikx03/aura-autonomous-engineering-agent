@@ -1,0 +1,7 @@
+{
+  "id": "task-19-retry-backoff",
+  "title": "Fix flaky retry logic missing backoff/max-attempts",
+  "category": "reliability",
+  "difficulty": "hard",
+  "description": "call_with_retry(fn, max_attempts) in retry.py accepts a max_attempts parameter but never enforces it - it loops forever ('while True') until fn() succeeds. Bound the loop to max_attempts and return a structured {\"success\": False, \"attempts\": n, \"error\": ...} result when all attempts are exhausted, instead of retrying indefinitely."
+}

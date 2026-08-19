@@ -1,0 +1,7 @@
+{
+  "id": "task-06-off-by-one",
+  "title": "Fix a failing test due to an off-by-one bug",
+  "category": "logic",
+  "difficulty": "easy",
+  "description": "first_n_even_numbers(n) in numbers.py should return the first n positive even numbers, but its range() call is off by one and returns only n-1 of them. Fix the range bounds so exactly n even numbers are returned."
+}

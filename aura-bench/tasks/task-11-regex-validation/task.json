@@ -1,0 +1,7 @@
+{
+  "id": "task-11-regex-validation",
+  "title": "Fix a broken regex validation",
+  "category": "validation",
+  "difficulty": "medium",
+  "description": "validate_email() in validators.py uses an unescaped '.' before the TLD, so the regex '.' metacharacter matches ANY character, not just a literal dot. This means strings with no real domain dot (e.g. 'bob@sitexcom') are incorrectly accepted. Escape the dot (and tighten the TLD to letters) so only real email-shaped strings validate."
+}

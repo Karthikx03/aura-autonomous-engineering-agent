@@ -1,0 +1,7 @@
+{
+  "id": "task-12-pagination",
+  "title": "Fix a pagination bug",
+  "category": "logic",
+  "difficulty": "easy",
+  "description": "paginate() in pagination.py computes its slice end bound as start + page_size - 1, which drops the last item of every page. Fix the slice bounds so each page (except possibly the last) contains exactly page_size items."
+}

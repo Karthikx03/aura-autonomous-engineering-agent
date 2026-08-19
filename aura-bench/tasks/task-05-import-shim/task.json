@@ -1,0 +1,7 @@
+{
+  "id": "task-05-import-shim",
+  "title": "Resolve a dependency/import problem",
+  "category": "dependencies",
+  "difficulty": "easy",
+  "description": "consumer.py does `from shim import add, multiply`, but shim.py only defines add(). Importing consumer.py raises ImportError because multiply is missing. Add a correct multiply(a, b) export to shim.py so consumer.compute() works."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "task-15-stale-cache",
+  "title": "Fix a caching bug returning stale data",
+  "category": "logic",
+  "difficulty": "medium",
+  "description": "UserStore.set_user() in cache_store.py updates the underlying data dict but never invalidates or refreshes the cache, so get_user() keeps returning the old cached value after an update. Fix set_user() so the cache reflects the new value."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "task-03-auth-bug",
+  "title": "Fix authentication bug",
+  "category": "security",
+  "difficulty": "medium",
+  "description": "login() in auth.py has an inverted boolean comparison: it returns True when the supplied password does NOT match the stored password, and False when it does match. This both locks out legitimate users and lets anyone in with a wrong password. Fix the comparison so login() only succeeds when the password matches."
+}

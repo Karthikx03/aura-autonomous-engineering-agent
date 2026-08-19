@@ -1,0 +1,7 @@
+{
+  "id": "task-17-cors-header",
+  "title": "Fix a CORS/header configuration bug",
+  "category": "api",
+  "difficulty": "easy",
+  "description": "build_response_headers(origin) in http_headers.py ignores its origin argument and always returns a hardcoded Access-Control-Allow-Origin of http://localhost:3000, and omits Access-Control-Allow-Methods entirely. Fix it to reflect the requesting origin and include an Allow-Methods header."
+}

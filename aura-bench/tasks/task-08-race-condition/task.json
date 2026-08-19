@@ -1,0 +1,7 @@
+{
+  "id": "task-08-race-condition",
+  "title": "Fix a race condition",
+  "category": "concurrency",
+  "difficulty": "hard",
+  "description": "Counter.increment() in counter.py performs a non-atomic read-modify-write on self.value with no locking, so concurrent threads calling it lose updates. Add a threading.Lock so increments are atomic and the final count is exactly correct under concurrent access."
+}

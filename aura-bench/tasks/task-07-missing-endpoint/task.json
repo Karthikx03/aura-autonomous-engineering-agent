@@ -1,0 +1,7 @@
+{
+  "id": "task-07-missing-endpoint",
+  "title": "Add a missing endpoint/handler",
+  "category": "api",
+  "difficulty": "medium",
+  "description": "handlers.py implements dispatch() for GET /items but has no handler for POST /items, so creating an item 404s. Add a create_item handler that appends the given item to the in-memory store and registers it for POST /items, returning a 201 status with the created item."
+}

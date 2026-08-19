@@ -1,0 +1,7 @@
+{
+  "id": "task-18-env-var",
+  "title": "Fix an env-var not being read",
+  "category": "configuration",
+  "difficulty": "easy",
+  "description": "get_database_url() in config.py always returns the hardcoded default sqlite URL and never checks the DATABASE_URL environment variable. Fix it to read os.environ['DATABASE_URL'] when present, falling back to the default only when it is unset."
+}

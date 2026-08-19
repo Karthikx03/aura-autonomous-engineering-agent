@@ -1,0 +1,7 @@
+{
+  "id": "task-04-db-migration",
+  "title": "Add a database migration",
+  "category": "database",
+  "difficulty": "medium",
+  "description": "migrations.py defines the migration list used to build the 'users' table, but it is missing a required ALTER TABLE step that adds an 'email' column needed by the rest of the application. Add the missing migration statement so the users table has an email column after apply_migrations() runs."
+}

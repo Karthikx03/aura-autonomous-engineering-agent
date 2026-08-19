@@ -1,0 +1,7 @@
+{
+  "id": "task-13-sort-comparator",
+  "title": "Fix incorrect sort comparator",
+  "category": "logic",
+  "difficulty": "easy",
+  "description": "sort_by_score_desc() in sorter.py is supposed to sort records by their 'score' field, highest first, but it sorts by the 'name' field ascending instead. Fix the sort key and direction so records come back ordered by score, descending."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "task-14-sql-where",
+  "title": "Fix a SQL query missing a WHERE clause",
+  "category": "database",
+  "difficulty": "easy",
+  "description": "get_active_users() in queries.py runs 'SELECT id, name FROM users' with no WHERE clause, so it returns every user including inactive ones. Add a WHERE active = 1 clause so only active users are returned."
+}

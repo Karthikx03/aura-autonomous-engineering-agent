@@ -1,0 +1,7 @@
+{
+  "id": "task-09-error-handling",
+  "title": "Improve error handling",
+  "category": "reliability",
+  "difficulty": "easy",
+  "description": "safe_parse() in parser.py is meant to safely parse a string into an int and report structured success/error results, but it lets the underlying ValueError from int() propagate uncaught. Wrap the parsing in a try/except and return a structured {\"success\": bool, ...} dict instead of raising."
+}

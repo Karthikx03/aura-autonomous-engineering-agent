@@ -1,0 +1,7 @@
+{
+  "id": "task-16-json-datetime",
+  "title": "Fix JSON serialization of datetime",
+  "category": "serialization",
+  "difficulty": "easy",
+  "description": "to_json() in serializer.py calls json.dumps() directly on records that may contain datetime values, which raises TypeError since datetime isn't JSON serializable by default. Add a default= handler to json.dumps that converts datetime objects to ISO-8601 strings."
+}

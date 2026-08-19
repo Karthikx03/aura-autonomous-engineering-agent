@@ -1,0 +1,7 @@
+{
+  "id": "task-20-mutable-default",
+  "title": "Fix incorrect dict/list mutation bug",
+  "category": "logic",
+  "difficulty": "medium",
+  "description": "add_item(item, items=[]) in todo.py uses a mutable list as a default argument, so the same list object is reused and silently accumulates across unrelated calls that don't pass their own list. Fix it with the standard items=None + 'if items is None: items = []' pattern."
+}

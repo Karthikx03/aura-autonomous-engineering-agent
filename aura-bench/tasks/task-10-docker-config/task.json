@@ -1,0 +1,7 @@
+{
+  "id": "task-10-docker-config",
+  "title": "Fix a Docker configuration bug",
+  "category": "infrastructure",
+  "difficulty": "easy",
+  "description": "The Dockerfile EXPOSEs port 3000 and starts main.py, but the actual service (server.py) listens on port 8080. Fix the Dockerfile so it EXPOSEs 8080 and its CMD launches server.py."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "task-02-missing-function",
+  "title": "Implement missing function",
+  "category": "implementation",
+  "difficulty": "easy",
+  "description": "string_utils.py declares reverse_words(s) but its body only raises NotImplementedError. Implement it so it reverses the order of whitespace-separated words in the input string (collapsing extra whitespace), e.g. reverse_words('hello world') == 'world hello'."
+}
