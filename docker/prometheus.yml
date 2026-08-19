@@ -1,0 +1,11 @@
+# Minimal Prometheus config for the optional `observability` compose
+# profile (`docker compose --profile observability up`). Scrapes the AURA
+# backend's /api/metrics endpoint when METRICS_ENABLED=true.
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "aura-backend"
+    static_configs:
+      - targets: ["backend:8000"]
+    metrics_path: /api/metrics

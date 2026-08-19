@@ -1,0 +1,73 @@
+name: aura
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:8000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://aura:aura@postgres:5432/aura
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    # Mount the Docker socket so SandboxManager can reach a real daemon and
+    # run agent commands in genuine containers (mode == "docker") instead of
+    # falling back to the reduced-isolation local-subprocess mode. Optional:
+    # remove this if you don't want the backend container talking to the
+    # host's Docker daemon.
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: aura
+      POSTGRES_USER: aura
+      POSTGRES_PASSWORD: aura
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # Observability stack is optional and off by default so `docker compose up`
+  # stays lean, per the project spec. Bring it up explicitly with:
+  #   docker compose --profile observability up
+  prometheus:
+    image: prom/prometheus:latest
+    profiles: ["observability"]
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    profiles: ["observability"]
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  pgdata:
