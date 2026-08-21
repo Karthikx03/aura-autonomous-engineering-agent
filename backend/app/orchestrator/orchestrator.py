@@ -54,8 +54,24 @@ class Orchestrator:
         if inspect.isawaitable(result):
             await result
 
-    async def run_task(self, goal: str, repo_path: str, max_iterations: int | None = None) -> TaskState:
+    async def run_task(
+        self,
+        goal: str,
+        repo_path: str,
+        max_iterations: int | None = None,
+        task_id: str | None = None,
+    ) -> TaskState:
+        """Run one autonomous task end to end.
+
+        ``task_id`` lets a caller (e.g. the API layer, which hands the
+        caller a task id *before* the run starts so it can be polled or
+        subscribed to over WebSocket) pin the resulting ``TaskState`` to an
+        id it already generated, instead of ``TaskState``'s own random
+        default -- otherwise the id returned by ``POST /api/tasks`` would
+        silently diverge from the id on the finished state.
+        """
         state = TaskState(
+            **({"task_id": task_id} if task_id else {}),
             goal=goal,
             repo_path=repo_path,
             max_iterations=max_iterations or 5,

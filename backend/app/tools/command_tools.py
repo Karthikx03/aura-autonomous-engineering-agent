@@ -67,7 +67,13 @@ class RunTestsTool(Tool):
     name = "run_tests"
     description = "Run a project's test suite and parse a pytest-style summary."
 
-    async def _run(self, cwd: str, test_command: str = "pytest -q") -> dict[str, Any]:
+    # "python3 -m pytest", not the bare "pytest" console script: `-m` puts
+    # `cwd` on sys.path[0], which is what lets a target repo's own top-level
+    # modules (e.g. demo/broken_project/tasklist.py) be importable from its
+    # tests/ directory without an __init__.py or a src-layout. The bare
+    # `pytest` entry point does not do this and fails target repos that are
+    # laid out exactly like AURA's own demo project.
+    async def _run(self, cwd: str, test_command: str = "python3 -m pytest -q") -> dict[str, Any]:
         result = await _run_subprocess(test_command, cwd, timeout=300)
         raw_output = result["stdout"] + result["stderr"]
 

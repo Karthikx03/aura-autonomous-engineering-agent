@@ -53,15 +53,21 @@ class MockProvider(LLMProvider):
         return f"Acknowledged request ({len(prompt)} chars). Proceeding with the requested engineering task."
 
     def _json_payload(self, lowered: str) -> dict:
-        if "plan" in lowered:
-            return {
-                "goal": "Implement the requested change",
-                "requirements": ["Understand existing code", "Implement change", "Add tests"],
-                "tasks": ["Analyze repository", "Modify source files", "Write/adjust tests"],
-                "files": [],
-                "tests": ["Run existing test suite", "Add regression test"],
-                "risks": ["Possible regression in dependent modules"],
-            }
+        # Order matters: the coder's own prompt contains the word "plan"
+        # (it echoes "Implementation plan for goal: ..." back for context),
+        # so a naive "plan" check would misclassify coder requests as
+        # planner requests and hand back a planner-shaped object with no
+        # "edits" key. Check for the coder's distinctive "edits" marker
+        # first so each agent's prompt is routed to its own response shape.
+        if "edits" in lowered:
+            # MockProvider is a deterministic, offline, zero-API-key
+            # provider used for tests/CI/demo wiring -- it does not
+            # fabricate source code. Returning a genuine (empty) edit list
+            # here is the honest behavior: it exercises the coder's real
+            # apply-edits/tool-call path end to end, but correctly cannot
+            # invent a fix for an arbitrary bug. Making actual code changes
+            # requires a real LLM provider (OpenAI/Anthropic/Gemini/Ollama).
+            return {"edits": []}
         if "debug" in lowered or "failure" in lowered:
             return {
                 "root_cause": "Assertion mismatch between expected and actual value",
@@ -77,5 +83,14 @@ class MockProvider(LLMProvider):
                 "frameworks": [],
                 "has_tests": True,
                 "summary": "Repository analyzed successfully.",
+            }
+        if "plan" in lowered:
+            return {
+                "goal": "Implement the requested change",
+                "requirements": ["Understand existing code", "Implement change", "Add tests"],
+                "tasks": ["Analyze repository", "Modify source files", "Write/adjust tests"],
+                "files": [],
+                "tests": ["Run existing test suite", "Add regression test"],
+                "risks": ["Possible regression in dependent modules"],
             }
         return {"result": "ok"}

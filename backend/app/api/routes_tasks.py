@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -21,6 +22,30 @@ from app.orchestrator.state import TaskState
 logger = logging.getLogger("aura.api.tasks")
 
 router = APIRouter(prefix="/api", tags=["tasks"])
+
+# backend/app/api/routes_tasks.py -> backend/app/api -> backend/app -> backend -> <project root>
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+
+def _resolve_repo_path(repo_path: str) -> str:
+    """Anchor a possibly-relative ``repo_path`` to the project root.
+
+    Every downstream consumer (the repo analyst, the sandboxed file tools,
+    the test/command runners) does ``Path(repo_path).resolve()`` or
+    equivalent, which resolves relative paths against the *server
+    process's* current working directory -- not the repository root. That
+    makes API behavior depend on the directory uvicorn happened to be
+    launched from, so callers sending a natural relative path like
+    ``"demo/broken_project"`` (exactly what the frontend's "Run Demo"
+    button sends) would get a spurious "No such file or directory" if the
+    server wasn't started from the project root. Resolving once, here, at
+    the API boundary makes every other module's behavior independent of
+    server cwd.
+    """
+    path = Path(repo_path)
+    if not path.is_absolute():
+        path = PROJECT_ROOT / path
+    return str(path.resolve())
 
 
 class CreateTaskRequest(BaseModel):
@@ -45,7 +70,7 @@ async def _run_and_track(task_id: str, goal: str, repo_path: str, provider: str 
 
     try:
         orchestrator = build_orchestrator(repo_path, provider=provider)
-        final_state = await orchestrator.run_task(goal=goal, repo_path=repo_path)
+        final_state = await orchestrator.run_task(goal=goal, repo_path=repo_path, task_id=task_id)
         task_store.tasks[task_id] = final_state
     except Exception as exc:  # noqa: BLE001 - never let a background task raise unseen
         logger.exception("Task %s failed", task_id)
@@ -86,10 +111,13 @@ async def _persist_best_effort(state: TaskState | None) -> None:
 
 @router.post("/tasks")
 async def create_task(request: CreateTaskRequest) -> dict:
-    state = TaskState(goal=request.goal, repo_path=request.repo_path)
+    repo_path = _resolve_repo_path(request.repo_path)
+    if not Path(repo_path).is_dir():
+        raise HTTPException(status_code=400, detail=f"repo_path does not exist: {repo_path}")
+    state = TaskState(goal=request.goal, repo_path=repo_path)
     task_store.tasks[state.task_id] = state
     task_store.events.setdefault(state.task_id, [])
-    asyncio.create_task(_run_and_track(state.task_id, request.goal, request.repo_path, request.provider))
+    asyncio.create_task(_run_and_track(state.task_id, request.goal, repo_path, request.provider))
     return {"task_id": state.task_id}
 
 

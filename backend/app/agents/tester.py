@@ -8,7 +8,7 @@ from app.orchestrator.state import TestReport
 class TestingAgent(BaseAgent):
     name = "tester"
 
-    async def run_tests(self, repo_path: str, test_command: str = "pytest -q") -> TestReport:
+    async def run_tests(self, repo_path: str, test_command: str = "python3 -m pytest -q") -> TestReport:
         self.emit("Test run started", repo_path=repo_path, test_command=test_command)
 
         if self.tools is None:
