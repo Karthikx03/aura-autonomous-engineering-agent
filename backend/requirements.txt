@@ -3,6 +3,18 @@ uvicorn[standard]==0.30.6
 pydantic==2.9.2
 pydantic-settings==2.5.2
 sqlalchemy==2.0.35
+# Explicit, not left to sqlalchemy's own dependency metadata: sqlalchemy
+# 2.0.35's Requires-Dist marker for greenlet (which its async engine needs
+# at runtime -- app/memory/db.py uses `engine.begin()`/AsyncSession) is
+# `python_version < "3.13" and platform_machine in (...)`, i.e. it stops
+# requiring greenlet at all on Python 3.13+, because greenlet didn't have
+# 3.13 wheels yet when 2.0.35 was released. greenlet has supported 3.13
+# since its own 3.1.0 release, so pinning it directly here (rather than
+# relying on sqlalchemy to pull it in) is what actually makes the async
+# engine work on a current Python 3.13 install -- without this, `uvicorn
+# app.main:app --reload` starts and then fails at the first request with
+# "ValueError: the greenlet library is required to use this function."
+greenlet>=3.1.0
 aiosqlite==0.20.0
 # Postgres driver (psycopg2-binary) intentionally lives in
 # requirements-postgres.txt, not here: the default config (app/config.py)
