@@ -9,8 +9,13 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends git gcc \
     && rm -rf /var/lib/apt/lists/*
 
-COPY backend/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/requirements.txt backend/requirements-postgres.txt ./
+# requirements-postgres.txt (psycopg2-binary) is installed here because
+# docker-compose.yml points this service at a real Postgres container
+# (DATABASE_URL=postgresql+psycopg2://...); it's kept out of the base
+# requirements.txt so a bare-metal local dev install (sqlite by default)
+# doesn't need PostgreSQL headers. See requirements-postgres.txt.
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-postgres.txt
 
 COPY backend/ ./
 

@@ -139,6 +139,11 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
+This uses the default local sqlite database and no external services --
+nothing else to install. If you're pointing AURA at a real PostgreSQL
+database instead (see `docker-compose.yml`), also run
+`pip install -r requirements-postgres.txt`.
+
 ### Frontend
 
 ```bash

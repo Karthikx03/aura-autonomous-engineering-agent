@@ -1,0 +1,9 @@
+# Optional: only needed if you're pointing AURA at a real PostgreSQL
+# database (e.g. via `docker compose up`, which sets
+# DATABASE_URL=postgresql+psycopg2://...) instead of the default local
+# sqlite+aiosqlite database. Not required for `uvicorn app.main:app --reload`
+# against the default config, and not imported by any app code directly.
+#
+# Install with:
+#   pip install -r requirements.txt -r requirements-postgres.txt
+psycopg2-binary==2.9.9
